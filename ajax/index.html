@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AJAX Menu Example</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+    }
+
+    #menuPane {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 200px;
+      height: 100%;
+      background: #f0f0f0;
+      padding: 10px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+      display: none;
+    }
+
+    #menuPane a {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    #contentWrapper {
+      margin-left: 0;
+      transition: margin-left 0.3s ease;
+      padding: 20px;
+    }
+
+    .menu-open #menuPane {
+      display: block;
+    }
+
+    .menu-open #contentWrapper {
+      margin-left: 200px;
+    }
+
+    .button-link {
+      display: inline-block;
+      padding: 8px 16px;
+      margin: 5px 0;
+      background-color: #add8e6; /* Light blue */
+      color: #000;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .button-link:hover {
+      background-color: #87ceeb; /* Slightly darker blue on hover */
+    }
+  </style>
+</head>
+<body>
+  <div id="menuPane">
+    <a href="https://www.google.com" target="_blank" class="button-link">Google</a>
+    <a href="https://www.amazon.com" target="_blank" class="button-link">Amazon</a>
+    <a href="#" id="backLink" class="button-link">Back</a>
+  </div>
+
+  <div id="contentWrapper">
+    <a href="#" id="menuLink" class="button-link">Menu</a>
+    <h1>Welcome</h1>
+    <p>This is your main content area. It will shift right when the menu is open.</p>
+  </div>
+
+  <script>
+    const menuLink = document.getElementById("menuLink");
+    const backLink = document.getElementById("backLink");
+
+    menuLink.addEventListener("click", function(e) {
+      e.preventDefault();
+      document.body.classList.add("menu-open");
+    });
+
+    backLink.addEventListener("click", function(e) {
+      e.preventDefault();
+      document.body.classList.remove("menu-open");
+    });
+  </script>
+</body>
+</html>
