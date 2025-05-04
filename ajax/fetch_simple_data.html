@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>YAML Viewer</title>
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+  <style>
+    textarea {
+      width: 100%;
+      height: 200px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <button onclick="fetchYaml()">Fetch and Display YAML</button>
+  <textarea id="yamlFields" readonly></textarea>
+
+  <script>
+    async function fetchYaml() {
+      try {
+        const response = await fetch('/simple_data.yaml');
+        const yamlText = await response.text();
+        const data = jsyaml.load(yamlText);
+
+        // Pick specific fields from the YAML
+        const displayText = "Fetched name: " + data.name + "\nvalue: " + data.value;
+        document.getElementById('yamlFields').value = displayText;
+      } catch (e) {
+        document.getElementById('yamlFields').value = 'Error fetching or parsing YAML: ' + e;
+        console.error(e);
+      }
+    }
+  </script>
+</body>
+</html>

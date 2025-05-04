@@ -18,7 +18,7 @@
       try {
         const obj = jsyaml.load(text);
         document.getElementById('output').textContent = JSON.stringify(obj, null, 2);
-        document.getElementById('result').textContent = obj.name;
+        document.getElementById('result').textContent = obj.value;
       } catch (e) {
         document.getElementById('output').textContent = "Error: " + e.message;
       }
