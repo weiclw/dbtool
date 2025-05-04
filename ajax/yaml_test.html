@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>YAML Parser</title>
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+</head>
+<body>
+  <p>Hello</p>
+  <textarea id="yaml-input" rows="10" cols="40">name: example\nvalue: 42</textarea>
+  <button onclick="fillText()">Click to correct initial value</button>
+  <button onclick="parseYaml()">Parse</button>
+  <pre id="output"></pre>
+  <textarea id="result"></textarea>
+
+  <script>
+    function parseYaml() {
+      const text = document.getElementById('yaml-input').value;
+      try {
+        const obj = jsyaml.load(text);
+        document.getElementById('output').textContent = JSON.stringify(obj, null, 2);
+        document.getElementById('result').textContent = obj.name;
+      } catch (e) {
+        document.getElementById('output').textContent = "Error: " + e.message;
+      }
+    }
+
+    function fillText() {
+      const text = "name: example\nvalue: 42";
+      document.getElementById('yaml-input').value = text;
+    }
+  </script>
+</body>
+</html>
