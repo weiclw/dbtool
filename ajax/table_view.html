@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>YAML Table Viewer</title>
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #aaa;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #eee;
+    }
+    th:first-child, td:first-child {
+      width: 40px; /* Adjust this value as needed */
+      text-align: center;
+    }
+    tr.highlight {
+      background-color: lightblue;
+    }
+    #selected-rows {
+      margin-top: 10px;
+      width: 100%;
+      height: 50px;
+    }
+  </style>
+</head>
+<body>
+  <h2>YAML Table</h2>
+  <div id="table-container">Loading...</div>
+  <textarea id="selected-rows" readonly placeholder="Selected row numbers will appear here..."></textarea>
+
+  <script>
+    async function loadYamlAndRenderTable() {
+      try {
+        const response = await fetch('/table_view_data.yaml'); // replace with your YAML endpoint
+        const yamlText = await response.text();
+        const data = jsyaml.load(yamlText);
+
+        // Check if it's an array
+        if (!Array.isArray(data)) {
+          document.getElementById('table-container').innerText = 'YAML is not a list.';
+          return;
+        }
+
+        if (data.length === 0) {
+          document.getElementById('table-container').innerText = 'YAML list is empty.';
+          return;
+        }
+
+        // Check that all items are objects and have the same keys
+        const keys = Object.keys(data[0]);
+        const allKeysMatch = data.every(item =>
+          typeof item === 'object' &&
+          item !== null &&
+          JSON.stringify(Object.keys(item).sort()) === JSON.stringify(keys.sort())
+        );
+
+        if (!allKeysMatch) {
+          document.getElementById('table-container').innerText = 'List items do not have identical keys.';
+          return;
+        }
+
+        // Build the table
+        let html = '<table><thead><tr>';
+        html += '<th>Select</th>'; // Checkbox column header
+        html += keys.map(k => `<th>${k}</th>`).join('');
+        html += '</tr></thead><tbody>';
+
+        data.forEach((item, idx) => {
+          html += `<tr data-row-index="${idx + 1}">`;
+          html += `<td><input type="checkbox" onchange="handleCheck(this)"></td>`;
+          html += keys.map(k => `<td>${item[k]}</td>`).join('');
+          html += '</tr>';
+        });
+
+        html += '</tbody></table>';
+        document.getElementById('table-container').innerHTML = html;
+
+      } catch (err) {
+        console.error(err);
+        document.getElementById('table-container').innerText = 'Failed to fetch or parse YAML.';
+      }
+    }
+
+    function handleCheck(checkbox) {
+      const row = checkbox.closest('tr');
+      const index = row.getAttribute('data-row-index');
+
+      if (checkbox.checked) {
+        row.classList.add('highlight');
+      } else {
+        row.classList.remove('highlight');
+      }
+
+      // Update textarea with all selected row indexes
+      const selected = Array.from(document.querySelectorAll('tbody input[type="checkbox"]:checked'))
+        .map(cb => cb.closest('tr').getAttribute('data-row-index'));
+      
+      document.getElementById('selected-rows').value = selected.join(', ');
+    }
+
+    window.addEventListener('load', loadYamlAndRenderTable);
+  </script>
+</body>
+</html>
