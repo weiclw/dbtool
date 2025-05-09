@@ -1,7 +1,7 @@
 // You need js-yaml to parse YAML. Ensure it's included in your HTML:
 // <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
 
-async function render_table(url) {
+async function render_table(table_name, url) {
     try {
       const response = await fetch(url);
       const yamlText = await response.text();
@@ -50,7 +50,7 @@ async function render_table(url) {
           const td = document.createElement('td');
           const colEntry = item.row?.find(entry => Object.keys(entry)[0] === col);
           td.textContent = colEntry ? colEntry[col] : '';
-          //td.style.border = '0px solid #ccc';
+          td.style.border = '1px solid #ccc';
           //td.style.padding = '5px';
           tr.appendChild(td);
         }
@@ -59,7 +59,7 @@ async function render_table(url) {
       }
       table.appendChild(tbody);
   
-      const container = document.getElementById('table-container');
+      const container = document.getElementById(table_name);
       container.innerHTML = '';
       container.appendChild(table);
   
