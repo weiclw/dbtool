@@ -1,0 +1,20 @@
+gadget: table
+attributes:
+  style: "border-collapse: collapse; width: 100%;"
+  class: "my-table"
+columns:
+  - Name
+  - Price
+  - InStock
+data:
+  - id: row1
+    row:
+      - Name: Widget
+      - Price: 19.99
+      - InStock: Yes
+  - id: row2
+    class: highlight
+    row:
+      - Name: Gadget
+      - Price: 29.99
+      - InStock: No

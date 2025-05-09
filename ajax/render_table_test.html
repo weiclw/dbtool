@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>YAML Table Renderer</title>
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 5px;
+    }
+    tr.highlight {
+      background-color: lightyellow;
+    }
+  </style>
+</head>
+<body>
+  <h1>Table from YAML</h1>
+  <div id="table-container">Loading...</div>
+
+  <!-- Load your external render_table function -->
+  <script src="/js/render_table.js"></script>
+
+  <script>
+    // Call it after everything is loaded
+    window.addEventListener('DOMContentLoaded', () => {
+      render_table('/ajax/render_table_test.yaml');
+    });
+  </script>
+</body>
+</html>
