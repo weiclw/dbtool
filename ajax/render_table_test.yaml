@@ -2,6 +2,7 @@ gadget: table
 attributes:
   style: "border-collapse: collapse; width: 100%;"
   class: "my-table"
+show_column_name: 0
 columns:
   - Name
   - Price
@@ -17,4 +18,4 @@ data:
     row:
       - Name: Gadget
       - Price: 29.99
-      - InStock: No
+      - InStock: "<a href=\"www.google.com\">google</a>"

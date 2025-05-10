@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Click Me Button</title>
+  <style>
+    .orange-button {
+      background-color: orange;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .orange-button:hover {
+      background-color: darkorange;
+    }
+  </style>
+</head>
+<body>
+
+  <p>
+  <button class="orange-button" onclick="handleClick(0)">Click me</button>
+  <button class="orange-button" onclick="handleClick(1)">Click me</button>
+  </p>
+
+  <p>
+  <button class="orange-button" onclick="handleClick(2)">Click me</button>
+  <button class="orange-button" onclick="handleClick(3)">Click me</button>
+  </p>
+
+  <script>
+    function handleClick(i) {
+      alert("Button " + i + " was clicked!");
+    }
+  </script>
+
+</body>
+</html>

@@ -27,8 +27,8 @@
 
   <script>
     // Call it after everything is loaded
-    window.addEventListener('DOMContentLoaded', () => {
-      render_table('table-container', '/ajax/render_table_test.yaml');
+    window.addEventListener('DOMContentLoaded', async () => {
+      await render_table('table-container', '/ajax/render_table_test.yaml');
     });
   </script>
 </body>

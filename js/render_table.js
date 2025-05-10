@@ -14,6 +14,7 @@ async function render_table(table_name, url) {
       const columns = data.columns || [];
       const rows = data.data || [];
       const tableAttrs = data.attributes || {}; // Optional table attributes from YAML
+      const show_column_name = data.show_column_name || 1;
   
       const table = document.createElement('table');
 
@@ -23,17 +24,19 @@ async function render_table(table_name, url) {
       }
   
       // Header
-      const thead = document.createElement('thead');
-      const headerRow = document.createElement('tr');
-      for (const col of columns) {
-        const th = document.createElement('th');
-        th.textContent = col;
-        th.style.border = '1px solid #ccc';
-        //th.style.padding = '5px';
-        headerRow.appendChild(th);
+      if (show_column_name == 1) {
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+        for (const col of columns) {
+          const th = document.createElement('th');
+          th.textContent = col;
+          th.style.border = '1px solid #ccc';
+          //th.style.padding = '5px';
+          headerRow.appendChild(th);
+        }
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
       }
-      thead.appendChild(headerRow);
-      table.appendChild(thead);
   
       // Body
       const tbody = document.createElement('tbody');
@@ -49,7 +52,7 @@ async function render_table(table_name, url) {
         for (const col of columns) {
           const td = document.createElement('td');
           const colEntry = item.row?.find(entry => Object.keys(entry)[0] === col);
-          td.textContent = colEntry ? colEntry[col] : '';
+          td.innerHTML = colEntry ? colEntry[col] : '';
           td.style.border = '1px solid #ccc';
           //td.style.padding = '5px';
           tr.appendChild(td);
